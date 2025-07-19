@@ -70,7 +70,7 @@ namespace Quiz_Application
             }
         }
 
-        static string DisplayQuestion(string question, string choices)
+        static string DisplayQuestion(string[] question, string[] choices)
         {
             while (true)
             {
