@@ -16,7 +16,7 @@ namespace Currency_Converter
             { "GBP", 0.79 },
             { "JPY", 157.80 },
             { "AUD", 40.23 },
-            { "TRY", 40.23 }
+            { "TRY", 40.39 }
         };
 
         static void Main(string[] args)
