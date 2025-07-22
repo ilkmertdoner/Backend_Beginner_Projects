@@ -45,6 +45,7 @@ namespace To_Do_List
                 {
                     ToDoItem newItem = new ToDoItem();
 
+                    Console.WriteLine("Note: The maximum number of To-Do items is 20. If you add a new item, the oldest one will be removed.");
                     newItem.Id = counter + 1;
                     Console.Write("Enter the title of the To-Do item: ");
                     newItem.Title = Console.ReadLine();
