@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace To_Do_List
 {
@@ -68,7 +69,7 @@ namespace To_Do_List
                         item[counter] = newItem;
                         counter++;
                     }
-                    else if (counter == 20)
+                    else if(counter == 20)
                     {
                         for (int i = 1; i < 20; i++)
                         {
