@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "To-Do_List", "To-Do_List\To
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserAuthSystem", "UserAuthSystem\UserAuthSystem.csproj", "{9A761EE3-4582-4099-8DD6-544022033EEC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banking_System", "Banking_System\Banking_System.csproj", "{8D92E67D-AAE9-4BD0-A624-30D753642B21}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{9A761EE3-4582-4099-8DD6-544022033EEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A761EE3-4582-4099-8DD6-544022033EEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A761EE3-4582-4099-8DD6-544022033EEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D92E67D-AAE9-4BD0-A624-30D753642B21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D92E67D-AAE9-4BD0-A624-30D753642B21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D92E67D-AAE9-4BD0-A624-30D753642B21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D92E67D-AAE9-4BD0-A624-30D753642B21}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
