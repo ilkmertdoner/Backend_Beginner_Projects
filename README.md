@@ -1,17 +1,14 @@
 #                  Backend Beginner Projects           #
 
----------------------------------------------------------------------------------------------------------------------------------
 
 This repository contains simple C# console applications designed to practice 
 C# fundamentals, object-oriented programming (OOP), methods, 
 and basic data structures. Each project focuses on a different scenario 
 to help improve programming skills gradually.
 
----------------------------------------------------------------------------------------------------------------------------------
 
 ## Projects Overview
 
----------------------------------------------------------------------------------------------------------------------------------
 
 | Project Name              | Description                                                                 |
 |----------------------------|-----------------------------------------------------------------------------|
@@ -22,11 +19,8 @@ to help improve programming skills gradually.
 | **To-Do List**             | Allows users to add, display, and remove simple to-do items via console.   |
 | **User Auth System**       | Demonstrates basic user authentication logic, using simple credential checks and in-memory user storage. |
 
----------------------------------------------------------------------------------------------------------------------------------
 
 ## Project Details
-
----------------------------------------------------------------------------------------------------------------------------------
 
 ### Banking System
 - Console-based banking application.
