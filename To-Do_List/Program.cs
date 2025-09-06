@@ -24,6 +24,7 @@ namespace To_Do_List
                 Console.WriteLine($"{Id}. {Title}, {Description}, {DueDate}, {status}");
             }
         }
+        
         static void Main(string[] args)
         {
             ToDoItem[] item = new ToDoItem[20];
@@ -43,90 +44,33 @@ namespace To_Do_List
 
                 if (choice == "1")
                 {
-                    ToDoItem newItem = new ToDoItem();
+                    bool flowControl = ToDoItemManager.AddToDoItem(item, ref counter);
 
-                    Console.WriteLine("Note: The maximum number of To-Do items is 20. If you add a new item, the oldest one will be removed.");
-                    newItem.Id = counter + 1;
-                    Console.Write("Enter the title of the To-Do item: ");
-                    newItem.Title = Console.ReadLine();
-                    Console.Write("\nEnter the description of the To-Do item: ");
-                    newItem.Description = Console.ReadLine();
-                    Console.Write("\nEnter the due date (in days from today): ");
-                    string dueDateInput = Console.ReadLine();
-                    newItem.IsCompleted = false;
-
-                    if (!dueDateInput.All(char.IsDigit))  
+                    if (!flowControl)
                     {
-                        Console.WriteLine("Please enter a valid due date.");
                         continue;
-                    }
-                    else
-                    {
-                        newItem.DueDate = dueDateInput;
-                    }
-
-                    if (counter < 20)
-                    {
-                        item[counter] = newItem;
-                        counter++;
-                    }
-                    else if(counter == 20)
-                    {
-                        for (int i = 1; i < 20; i++)
-                        {
-                            item[i - 1] = item[i];
-                        }
-
                     }
                 }
 
                 else if (choice == "2")
                 {
-                    for (int i = 0; i < counter; i++)
-                    {
-                        item[i].print();
-                    }
+                    bool flowControl = ToDoItemManager.MarkToDoItemAsCompleted(item, ref counter);
                     
-                    Console.WriteLine("----------------------------------------");
-                    Console.WriteLine("Note: Selecting a completed item will mark it as uncompleted.");
-                    Console.Write("Enter the ID of the To-Do item to mark as completed: ");
-                    int input = int.Parse(Console.ReadLine());
-
-                    if(input < 1 || input > counter)
+                    if (!flowControl)
                     {
-                        Console.WriteLine("Invalid ID. Please try again.");
                         continue;
                     }
-                    else if (item[input - 1].IsCompleted)
-                    {
-                        Console.WriteLine("This item is already completed. Marking it as uncompleted.");
-                        item[input - 1].IsCompleted = false;
-                        continue;
-                    }
-
-                    item[input - 1].IsCompleted = true;
 
                 }
 
                 else if (choice == "3")
                 {
-                    Console.Write("Select a To-Do item to delete by its ID: ");
-                    int input = int.Parse(Console.ReadLine());
-
-                    if (input < 1 || input > counter)
+                    bool flowControl = ToDoItemManager.DeleteToDoItem(item, ref counter);
+                    
+                    if (!flowControl)
                     {
-                        Console.WriteLine("Invalid ID. Please try again.");
                         continue;
                     }
-
-                    for (int i = input - 1; i < counter - 1; i++)
-                    {
-                        item[i] = item[i + 1];
-                        item[i].Id = i - 1; 
-                    }
-
-                    counter--; 
-                    Console.WriteLine("Selected To-Do item deleted.");
                 }
 
                 else if (choice == "4")
@@ -161,9 +105,116 @@ namespace To_Do_List
                     Console.Write("Invalid choice. Please select a valid option (1-4): ");
                 }
             }
+            
             Console.WriteLine("----------------------------------------");
             return options;
 
+        }
+
+        static class ToDoItemManager
+        {
+            public static bool AddToDoItem(ToDoItem[] item, ref int counter)
+            {
+                while (true)
+                {
+                    ToDoItem newItem = new ToDoItem();
+
+                    Console.WriteLine("Note: The maximum number of To-Do items is 20. If you add a new item, the oldest one will be removed.");
+                    newItem.Id = counter + 1;
+                    Console.Write("Enter the title of the To-Do item: ");
+                    newItem.Title = Console.ReadLine();
+                    Console.Write("\nEnter the description of the To-Do item: ");
+                    newItem.Description = Console.ReadLine();
+                    Console.Write("\nEnter the due date (in days from today): ");
+                    string dueDateInput = Console.ReadLine();
+                    newItem.IsCompleted = false;
+
+                    if (!dueDateInput.All(char.IsDigit))
+                    {
+                        Console.WriteLine("Please enter a valid due date.");
+                        Console.WriteLine("----------------------------------------");
+                        continue;
+                    }
+
+                    else
+                    {
+                        newItem.DueDate = dueDateInput;
+                    }
+
+                    if (counter < 20)
+                    {
+                        item[counter] = newItem;
+                        counter++;
+                    }
+
+                    else if (counter == 20)
+                    {
+                        for (int i = 1; i < 20; i++)
+                        {
+                            item[i - 1] = item[i];
+                        }
+                    }
+
+                    return true;
+                }
+            }
+            
+            public static bool MarkToDoItemAsCompleted(ToDoItem[] item, ref int counter)
+            {
+                for (int i = 0; i < counter; i++)
+                {
+                    item[i].print();
+                }
+
+                Console.WriteLine("----------------------------------------");
+                Console.WriteLine("Note: Selecting a completed item will mark it as uncompleted.");
+                Console.Write("Enter the ID of the To-Do item to mark as completed: ");
+                int input = int.Parse(Console.ReadLine());
+
+                if (input < 1 || input > counter)
+                {
+                    Console.WriteLine("Invalid ID. Please try again.");
+                    return false;
+                }
+                else if (item[input - 1].IsCompleted)
+                {
+                    Console.WriteLine("This item is already completed. Marking it as uncompleted.");
+                    item[input - 1].IsCompleted = false;
+                    return false;
+                }
+
+                item[input - 1].IsCompleted = true;
+                return true;
+            }
+            
+            public static bool DeleteToDoItem(ToDoItem[] item, ref int counter)
+            {
+                for (int i = 0; i < counter; i++)
+                {
+                    item[i].print();
+                }
+                
+                Console.WriteLine("----------------------------------------");
+
+                Console.Write("Select a To-Do item to delete by its ID: ");
+                int input = int.Parse(Console.ReadLine());
+
+                if (input < 1 || input > counter)
+                {
+                    Console.WriteLine("Invalid ID. Please try again.");
+                    return false;
+                }
+
+                for (int i = input - 1; i < counter - 1; i++)
+                {
+                    item[i] = item[i + 1];
+                    item[i].Id = i - 1;
+                }
+
+                counter--;
+                Console.WriteLine("Selected To-Do item deleted.");
+                return true;
+            }
         }
     }
 }

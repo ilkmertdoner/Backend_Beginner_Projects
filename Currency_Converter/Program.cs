@@ -25,21 +25,16 @@ namespace Currency_Converter
 
             while (isRunning)
             {
-                Console.WriteLine("-----------------------------------------------------");
-                Console.WriteLine("Welcome to the Currency Converter!");
-                Console.WriteLine("Press 1 to start the application");
-                Console.WriteLine("Press 2 to exit the application");
-                Console.Write("Enter your selection: ");
-
-                string selection = Console.ReadLine();
+                string selection = GetUserSelection();
 
                 if (selection == "2")
                 {
                     isRunning = false;
                     Console.WriteLine("Exiting the application.");
-                    Thread.Sleep(1500); 
+                    Thread.Sleep(1500);
                     break;
                 }
+                
                 else if (selection != "1")
                 {
                     Console.WriteLine("Invalid selection. Please try again.");
@@ -59,6 +54,18 @@ namespace Currency_Converter
                 Console.WriteLine($"Result: {amount} {fromCurrency} = {convertedAmount:F3} {toCurrency}");
                 Console.WriteLine();
             }
+        }
+
+        private static string GetUserSelection()
+        {
+            Console.WriteLine("-----------------------------------------------------");
+            Console.WriteLine("Welcome to the Currency Converter!");
+            Console.WriteLine("Press 1 to start the application");
+            Console.WriteLine("Press 2 to exit the application");
+            Console.Write("Enter your selection: ");
+
+            string selection = Console.ReadLine();
+            return selection;
         }
 
         static void DisplayCurrencies()

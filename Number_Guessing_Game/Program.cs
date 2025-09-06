@@ -16,20 +16,8 @@ namespace Number_Guessing_Game
             while (isRunning)
             {
                 Random random = new Random();
-
-                Console.WriteLine("----------------------------------------");
-                Console.WriteLine("Welcome to the Number Guessing Game!");
-                Console.WriteLine("Press any key to Start");
-                Console.WriteLine("Press 'q' to quit the game at any time.");
-                string choice = Console.ReadKey(true).KeyChar.ToString().ToLower();
-
-                if (choice == "q")
-                {
-                    isRunning = false;
-                    Console.WriteLine("Thank you for playing! Goodbye!");
-                    Thread.Sleep(2000);
-                    break;
-                }
+                
+                DisplayStartMenu();
 
                 var (lives, maxNumber) = DifficultySelection();
                 Console.WriteLine($"You have {lives} tries to guess a number between 0 and {maxNumber}.");
@@ -40,37 +28,66 @@ namespace Number_Guessing_Game
                 Console.WriteLine("--------------------------------------------");
                 Console.WriteLine("A number has been generated. Start guessing!");
 
-                while (lives > -1)
-                {
-                    if (lives == 0)
-                    {
-                        Console.WriteLine("You have no more lives left. Game Over!");
-                        Console.WriteLine($"The number was: {numberToGuess}");
-                        break;
-                    }
-
-                    Console.WriteLine($"You have {lives} tries left. Please enter your guess: ");
-                    int input = int.Parse(Console.ReadLine());
-
-                    if (input == numberToGuess)
-                    {
-                        Console.WriteLine("Congratulations! You've guessed the number correctly!");
-                        Thread.Sleep(2000);
-                        break;
-                    }
-                    else if (input < numberToGuess)
-                    {
-                        Console.WriteLine("Your guess is too low. Try again.");
-                        lives--;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Your guess is too high. Try again.");
-                        lives--;
-                    }
-                }
+                ProcessGuess(lives, numberToGuess);
 
             }
+        }
+
+        private static void ProcessGuess(int lives, int numberToGuess)
+        {
+            while (lives > -1)
+            {
+                if (lives == 0)
+                {
+                    Console.WriteLine("You have no more lives left. Game Over!");
+                    Console.WriteLine($"The number was: {numberToGuess}");
+                    Thread.Sleep(22000);
+                    Console.Clear();
+                    break;
+                }
+
+                Console.WriteLine("--------------------------------------------");
+                Console.Write($"You have {lives} tries left. Please enter your guess: ");
+                int input = int.Parse(Console.ReadLine());
+
+                if (input == numberToGuess)
+                {
+                    Console.WriteLine("Congratulations! You've guessed the number correctly!");
+                    Thread.Sleep(5000);
+                    Console.Clear();
+                    break;
+                }
+
+                else if (input < numberToGuess)
+                {
+                    Console.WriteLine("Your guess is too low. Try again.");
+                    lives--;
+                }
+
+                else
+                {
+                    Console.WriteLine("Your guess is too high. Try again.");
+                    lives--;
+                }
+            }
+        }
+
+        private static void DisplayStartMenu()
+        {
+            Console.WriteLine("----------------------------------------");
+            Console.WriteLine("Welcome to the Number Guessing Game!");
+            Console.WriteLine("Press any key to Start");
+            Console.WriteLine("Press 'q' to quit the game at any time.");
+
+            string choice = Console.ReadKey(true).KeyChar.ToString().ToLower();
+            
+            if (choice == "q")
+            {
+                Console.WriteLine("Thank you for playing! Goodbye!");
+                Environment.Exit(0);
+            }
+
+            return;
         }
 
         static (int lives, int MaxNumber) DifficultySelection()
