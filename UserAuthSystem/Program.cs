@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
@@ -22,64 +23,14 @@ namespace UserAuthSystem
 
                 if (choice == "1")
                 {
-                    while (true)
-                    {
-                        var (username, password) = Register();
-                        User newUser = new User(username, password);
-                        bool PasswordControl = newUser.ValidatePassword(password);
-
-                        if (PasswordControl == true)
-                        {
-                            users.Add(newUser);
-                            break;
-                        }
-                    }
-
-                    Console.WriteLine("Registration successful!");
-                    Console.WriteLine("-------------------------------------");
+                    RegisterUser(users);
                 }
 
                 else if (choice == "2")
                 {
                     int RemainingAttempts = 3;
 
-                    while (RemainingAttempts > 0)
-                    {
-                        Console.Write("Enter username: ");
-                        string username = Console.ReadLine();
-                        Console.Write("Enter password: ");
-                        string password = Console.ReadLine();
-
-                        bool loginSuccess = false;
-
-                        foreach (var user in users)
-                        {
-
-                            if (user.Login(username, password))
-                            {
-                                Console.WriteLine("Welcome, " + user.Username + "!");
-                                Console.WriteLine("------------------------------------------------");
-                                loginSuccess = true;
-                                break;
-                            }
-
-                        }
-
-                        RemainingAttempts--;
-
-                        Console.WriteLine($"Invalid Credentials. You have {RemainingAttempts} attempts left.");
-                        Console.WriteLine("------------------------------------------------");
-
-                        if (RemainingAttempts == 0)
-                        {
-                            Console.WriteLine("Too many failed attempts. Exiting the system.");
-                            Thread.Sleep(2000);
-                            loginSuccess = true;
-                            break;
-                        }
-
-                        if (loginSuccess == true) break;
-                    }
+                    AttemptLogin(users, ref RemainingAttempts);
                 }
 
                 else if (choice == "3")
@@ -94,7 +45,6 @@ namespace UserAuthSystem
                 }
             }
         }
-
         
         static string Menu(string prompt)
         {
@@ -118,7 +68,7 @@ namespace UserAuthSystem
                 
             }
         }
-
+        
         static (string name, string password) Register()
         {
             Console.Write("Enter username: ");
@@ -127,6 +77,73 @@ namespace UserAuthSystem
             string password = Console.ReadLine();
             return (username, password);
         }
+
+        private static void RegisterUser(List<User> users)
+        {
+            while (true)
+            {
+                var (username, password) = Register();
+                User newUser = new User(username, password);
+                bool PasswordControl = newUser.ValidatePassword(password);
+
+                if (PasswordControl == true)
+                {
+                    users.Add(newUser);
+                    break;
+                }
+
+                continue;
+            }
+
+            Console.WriteLine("Registration successful!");
+            Console.WriteLine("-------------------------------------");
+        }
+
+        private static int AttemptLogin(List<User> users, ref int RemainingAttempts)
+        {
+            while (RemainingAttempts > -1)
+            {
+                Console.Write("Enter username: ");
+                string username = Console.ReadLine();
+                Console.Write("Enter password: ");
+                string password = Console.ReadLine();
+
+                bool loginSuccess = false;
+
+                foreach (var user in users)
+                {
+
+                    if (user.Login(username, password))
+                    {
+                        Console.WriteLine("Welcome, " + user.Username + "!");
+                        Console.WriteLine("------------------------------------------------");
+                        loginSuccess = true;
+                        break;
+                    }
+
+                }
+                
+                if (loginSuccess == true) break;
+
+                RemainingAttempts--;
+
+                Console.WriteLine($"Invalid Credentials. You have {RemainingAttempts} attempts left.");
+                Console.WriteLine("------------------------------------------------");
+
+                if (RemainingAttempts == 0)
+                {
+                    Console.WriteLine("Too many failed attempts. Exiting the system.");
+                    Thread.Sleep(3000);
+                    Environment.Exit(0);
+                    break;
+                }
+
+            }
+
+            return RemainingAttempts;
+        }
+
+        
     }
 }
 
@@ -150,13 +167,12 @@ namespace UserAuthSystem
             }
             else
             {
-                Console.WriteLine("Password is valid.");
-                Console.WriteLine("-------------------------------------");
                 return true;
-            
             }
         }
-
+        
+        
+       
         public bool Login(string username, string password)
         {
 
